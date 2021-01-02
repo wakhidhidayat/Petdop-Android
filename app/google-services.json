@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "334326834922",
+    "firebase_url": "https://petdop-a88e7.firebaseio.com",
+    "project_id": "petdop-a88e7",
+    "storage_bucket": "petdop-a88e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334326834922:android:7dc01575aae23786499993",
+        "android_client_info": {
+          "package_name": "com.wahidhidayat.petdop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334326834922-7jss60s0s3dusjplnge5t87hj4l1foqr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wahidhidayat.petdop",
+            "certificate_hash": "095c990a05fee09b49b23d21b6a21d970ac5400f"
+          }
+        },
+        {
+          "client_id": "334326834922-t5r1dvgaqfa33k288d7e8lco5n6l8k4a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wahidhidayat.petdop",
+            "certificate_hash": "aa58d591f1f313cabab24f769dadaeed0ff2de5e"
+          }
+        },
+        {
+          "client_id": "334326834922-j5826n4ksts92arof7ad5cgcm2iaqs1j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-tSbTDZyhoh75OD0mLDtHUbO-ByMEQak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334326834922-j5826n4ksts92arof7ad5cgcm2iaqs1j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
