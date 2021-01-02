@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Petdop</string>
+    <string name="home">Home</string>
+    <string name="explore">Explore</string>
+    <string name="upload">Upload</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="account">Account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
