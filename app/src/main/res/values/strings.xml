@@ -16,4 +16,15 @@
     <string name="message">Pesan</string>
     <string name="image_pet">Image Pet</string>
     <string name="image_news">Image News</string>
+    <string name="description">Deskripsi</string>
+    <string name="age">Usia</string>
+    <string name="pet_status">Status</string>
+    <string name="address">Alamat</string>
+    <string name="reason">Alasan</string>
+    <string name="contact">Hubungi</string>
+    <string name="adoption">Adopsi</string>
+    <string name="weight">Berat</string>
+    <string name="vaccinated">Tervaksin</string>
+    <string name="not_vaccinated">Belum di vaksin</string>
+    <string name="author">Pemilik</string>
 </resources>
