@@ -29,13 +29,13 @@ class DetailPostActivity : AppCompatActivity() {
         supportActionBar?.title = post.name
 
         insertData()
-//
-//        image_carousel.setImageClickListener { position ->
-//            val intent = Intent(this@DetailPostActivity, DetailPhotoActivity::class.java)
-//            intent.putExtra(DetailPhotoActivity.EXTRA_PHOTOS, post.pet)
-//            intent.putExtra("IMAGE_POSITION", position)
-//            startActivity(intent)
-//        }
+
+        image_carousel.setImageClickListener { position ->
+            val intent = Intent(this@DetailPostActivity, DetailPhotoActivity::class.java)
+            intent.putExtra(DetailPhotoActivity.EXTRA_PHOTOS, post)
+            intent.putExtra("IMAGE_POSITION", position)
+            startActivity(intent)
+        }
 
 //        image_like.setOnClickListener {
 //            addToBookmark()
