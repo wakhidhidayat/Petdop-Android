@@ -4,31 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.wahidhidayat.petdop.R
+import com.wahidhidayat.petdop.data.Post
+import kotlinx.android.synthetic.main.fragment_bookmark.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [BookmarkFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BookmarkFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val mUser = FirebaseAuth.getInstance().currentUser
+    private val mUserReference = FirebaseFirestore.getInstance().collection("users")
+    private val mUserEmail = mUser!!.email
+
+    private val mList: MutableList<Post?> = mutableListOf()
+    private val mAdapter = BookmarkAdapter(mList, context, FirebaseFirestore.getInstance())
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -38,23 +30,42 @@ class BookmarkFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_bookmark, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BookmarkFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                BookmarkFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        loadBookmarks()
+
+        rv_bookmark.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            adapter = mAdapter
+        }
+    }
+
+    private fun loadBookmarks() {
+        mUserReference.document(mUserEmail!!).collection("bookmarks")
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        if (pb_bookmark != null) {
+                            pb_bookmark.visibility = View.GONE
+                        }
+
+                        for (doc in task.result!!) {
+                            val post: Post = doc.toObject(Post::class.java)
+                            mList.add(post)
+                            mAdapter.notifyDataSetChanged()
+                        }
+                    } else {
+                        Toast.makeText(
+                                activity,
+                                "Error getting documents: ${task.exception}",
+                                Toast.LENGTH_SHORT
+                        ).show()
                     }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(activity, "Error getting documents: $it", Toast.LENGTH_SHORT).show()
                 }
     }
 }
