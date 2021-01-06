@@ -27,4 +27,5 @@
     <string name="vaccinated">Tervaksin</string>
     <string name="not_vaccinated">Belum di vaksin</string>
     <string name="author">Pemilik</string>
+    <string name="search">Cari....</string>
 </resources>

@@ -291,7 +291,6 @@
                 tools:text="TextView" />
 
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

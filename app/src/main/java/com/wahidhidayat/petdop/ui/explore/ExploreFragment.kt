@@ -4,31 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
 import com.wahidhidayat.petdop.R
+import com.wahidhidayat.petdop.data.Post
+import kotlinx.android.synthetic.main.fragment_explore.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ExploreFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ExploreFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val mDb = FirebaseFirestore.getInstance()
+    private val postList: MutableList<Post?> = mutableListOf()
+
+    private val mAdapter = ExploreAdapter(postList, context, mDb)
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -38,23 +27,43 @@ class ExploreFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_explore, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ExploreFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                ExploreFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        loadPosts()
+
+        rv_explore.apply {
+            setHasFixedSize(true)
+            layoutManager = GridLayoutManager(activity, 3)
+            adapter = mAdapter
+        }
+    }
+
+    private fun loadPosts() {
+        mDb.collection("posts")
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        if (pb_explore != null) {
+                            pb_explore.visibility = View.GONE
+                        }
+
+                        for (doc in task.result!!) {
+                            val post: Post = doc.toObject(Post::class.java)
+                            postList.add(post)
+                            mAdapter.notifyDataSetChanged()
+                        }
+
+                    } else {
+                        Toast.makeText(
+                                activity,
+                                "Error getting documents: ${task.exception}",
+                                Toast.LENGTH_SHORT
+                        ).show()
                     }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(activity, "Error getting documents: $it", Toast.LENGTH_SHORT).show()
                 }
     }
 }
