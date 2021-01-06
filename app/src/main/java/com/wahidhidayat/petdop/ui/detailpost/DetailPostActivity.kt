@@ -1,10 +1,15 @@
 package com.wahidhidayat.petdop.ui.detailpost
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.synnapps.carouselview.ImageListener
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.Post
@@ -16,6 +21,11 @@ class DetailPostActivity : AppCompatActivity() {
         const val EXTRA_POST = "extra_post"
     }
 
+    private val mUser = FirebaseAuth.getInstance().currentUser
+    private val mUserReference = FirebaseFirestore.getInstance().collection("users")
+    private val mUserEmail = mUser!!.email
+    private var inBookmark = false
+
     private lateinit var post: Post
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +33,7 @@ class DetailPostActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail_post)
 
         post = intent.getParcelableExtra(EXTRA_POST) as Post
+        inBookmark = intent.getBooleanExtra("inBookmark", false)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -37,23 +48,79 @@ class DetailPostActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        image_like.setOnClickListener {
-//            addToBookmark()
-//        }
+        if (inBookmark) {
+            image_like.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_favorite_24))
+        } else {
+            image_like.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_favorite_border_24))
+        }
+        Log.d("isBookmarked", inBookmark.toString())
+
+        image_like.setOnClickListener {
+            if (inBookmark) {
+                removeFromBookmark()
+            } else {
+                addToBookmark()
+            }
+        }
     }
+
+    private fun addToBookmark() {
+        mUserReference.document(mUserEmail!!).collection("bookmarks").document(post.id).set(post)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Berhasil menambahkan ke bookmark!", Toast.LENGTH_SHORT).show()
+                    image_like.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_favorite_24))
+                    inBookmark = true
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Gagal menambahkan ke bookmark: $it", Toast.LENGTH_SHORT).show()
+                }
+    }
+
+    private fun removeFromBookmark() {
+        mUserReference.document(mUserEmail!!).collection("bookmarks").document(post.id).delete()
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Berhasil menghapus dari bookmark!", Toast.LENGTH_SHORT).show()
+                    image_like.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_favorite_border_24))
+                    inBookmark = false
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Gagal menambahkan ke bookmark: $it", Toast.LENGTH_SHORT).show()
+                }
+    }
+
+//    private fun checkBookmarks() {
+//        mUserReference.document(mUserEmail!!).collection("bookmarks").get()
+//                .addOnCompleteListener {
+//                    if(it.result!!.isEmpty) {
+//                        Log.d("document", "kosong")
+//                        inBookmark = false
+//                        addToBookmark()
+//                    } else {
+//                        for(document in it.result!!) {
+//                            Log.d("document", document.id)
+//                            if(document.id == post.id) {
+//                                inBookmark = true
+//                            }
+//                        }
+//                    }
+//                }
+//                .addOnFailureListener {
+//                    Toast.makeText(this, "Gagal memuat data, cek koneksi anda", Toast.LENGTH_SHORT).show()
+//                }
+//    }
 
     private fun insertData() {
         image_carousel.setImageListener(imageListener)
         image_carousel.pageCount = post.photos.size
         text_address.text = post.address
-        text_age.text = "${post.age.toString()} tahun"
+        text_age.text = "${post.age} tahun"
         text_category.text = post.category
         text_description.text = post.description
         text_gender.text = post.gender
         text_reason.text = post.reason
         text_name.text = post.name
         text_weight.text = post.weight.toString()
-        if(post.tervaksin) {
+        if (post.tervaksin) {
             text_status.text = getString(R.string.vaccinated)
         }
         text_status.text = getString(R.string.not_vaccinated)
@@ -61,11 +128,11 @@ class DetailPostActivity : AppCompatActivity() {
     }
 
     private var imageListener: ImageListener =
-        ImageListener { position, imageView ->
-            Glide.with(this)
-                .load(post.photos[position])
-                .into(imageView)
-        }
+            ImageListener { position, imageView ->
+                Glide.with(this)
+                        .load(post.photos[position])
+                        .into(imageView)
+            }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

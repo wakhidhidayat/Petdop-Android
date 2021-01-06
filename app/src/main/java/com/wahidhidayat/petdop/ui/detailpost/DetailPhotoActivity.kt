@@ -1,8 +1,8 @@
 package com.wahidhidayat.petdop.ui.detailpost
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.Post
 import kotlinx.android.synthetic.main.activity_detail_photo.*

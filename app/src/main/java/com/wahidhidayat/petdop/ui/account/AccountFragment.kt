@@ -37,8 +37,8 @@ class AccountFragment : Fragment() {
     private var imageUri: Uri? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_account, container, false)
@@ -48,23 +48,23 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         userRef.get()
-            .addOnSuccessListener { documentSnapshot ->
-                getUser(
-                    documentSnapshot.getString("name"),
-                    documentSnapshot.getString("email"),
-                    documentSnapshot.getString("phone"),
-                    documentSnapshot.getString("address"),
-                    documentSnapshot.getString("avatar")
-                )
-                pb_account.visibility = View.GONE
-                Log.d(
-                    "AccountFragment",
-                    "DocumentSnapshot data: ${documentSnapshot.getString("name")}."
-                )
-            }
-            .addOnFailureListener { exception ->
-                Log.d("AccountFragment", "get failed with ", exception)
-            }
+                .addOnSuccessListener { documentSnapshot ->
+                    getUser(
+                            documentSnapshot.getString("name"),
+                            documentSnapshot.getString("email"),
+                            documentSnapshot.getString("phone"),
+                            documentSnapshot.getString("address"),
+                            documentSnapshot.getString("avatar")
+                    )
+                    pb_account.visibility = View.GONE
+                    Log.d(
+                            "AccountFragment",
+                            "DocumentSnapshot data: ${documentSnapshot.getString("name")}."
+                    )
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("AccountFragment", "get failed with ", exception)
+                }
 
         btn_camera.setOnClickListener {
             askCameraPermission()
@@ -74,16 +74,16 @@ class AccountFragment : Fragment() {
             pb_account.visibility = View.VISIBLE
 
             userRef.update(
-                mapOf(
-                    "name" to et_name.text.toString(),
-                    "address" to et_address.text.toString(),
-                    "phone" to et_phone.text.toString()
-                )
+                    mapOf(
+                            "name" to et_name.text.toString(),
+                            "address" to et_address.text.toString(),
+                            "phone" to et_phone.text.toString()
+                    )
             ).addOnSuccessListener {
                 pb_account.visibility = View.GONE
                 Toast.makeText(activity, "Profil berhasil di update!", Toast.LENGTH_SHORT).show()
             }
-                .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+                    .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
 
             fileUpload()
         }
@@ -91,14 +91,14 @@ class AccountFragment : Fragment() {
 
     private fun askCameraPermission() {
         if (ContextCompat.checkSelfPermission(
-                this.context!!,
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
+                        this.context!!,
+                        Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-                this.activity!!,
-                arrayOf(Manifest.permission.CAMERA),
-                CAMERA_PERMISSION_CODE
+                    this.activity!!,
+                    arrayOf(Manifest.permission.CAMERA),
+                    CAMERA_PERMISSION_CODE
             )
         } else {
             capturePhoto()
@@ -106,16 +106,16 @@ class AccountFragment : Fragment() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 capturePhoto()
             } else {
                 Toast.makeText(activity, "Camera Permission is required!", Toast.LENGTH_SHORT)
-                    .show()
+                        .show()
             }
         }
     }
@@ -144,23 +144,23 @@ class AccountFragment : Fragment() {
     private fun fileUpload() {
         val imageRef = mStorageRef.child("avatars/${UUID.randomUUID()}")
         imageRef.putFile(imageUri!!)
-            .addOnSuccessListener {
-                Toast.makeText(activity, "Upload success!", Toast.LENGTH_SHORT).show()
-                imageRef.downloadUrl.addOnSuccessListener {
-                    Log.d("uri", it.toString())
+                .addOnSuccessListener {
+                    Toast.makeText(activity, "Upload success!", Toast.LENGTH_SHORT).show()
+                    imageRef.downloadUrl.addOnSuccessListener {
+                        Log.d("uri", it.toString())
+                    }
                 }
-            }
-            .addOnFailureListener {
-                Log.e("AccountFragment", it.toString())
-            }
+                .addOnFailureListener {
+                    Log.e("AccountFragment", it.toString())
+                }
     }
 
     private fun getUser(
-        name: String?,
-        email: String?,
-        phone: String?,
-        address: String?,
-        avatar: String?
+            name: String?,
+            email: String?,
+            phone: String?,
+            address: String?,
+            avatar: String?
     ) {
         et_name.setText(name)
         et_address.setText(address)
@@ -169,8 +169,8 @@ class AccountFragment : Fragment() {
 
         if (avatar != null) {
             Glide.with(this)
-                .load(avatar)
-                .into(image_avatar)
+                    .load(avatar)
+                    .into(image_avatar)
         }
     }
 }

@@ -11,17 +11,17 @@ object NewsApiService {
     private val interceptor = HttpLoggingInterceptor()
 
     private val client = OkHttpClient.Builder()
-        .addInterceptor(interceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
-        .connectTimeout(100, TimeUnit.SECONDS)
-        .readTimeout(100, TimeUnit.SECONDS)
-        .build()
+            .addInterceptor(interceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .build()
 
     private val retrofit = Retrofit
-        .Builder()
-        .baseUrl(BuildConfig.BASE_NEWS_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(client)
-        .build()
+            .Builder()
+            .baseUrl(BuildConfig.BASE_NEWS_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
 
     fun <T> buildService(service: Class<T>): T {
         return retrofit.create(service)
