@@ -28,4 +28,7 @@
     <string name="not_vaccinated">Belum di vaksin</string>
     <string name="author">Pemilik</string>
     <string name="search">Cari....</string>
+    <string name="adoption_form">Form Pengajuan Adopsi</string>
+    <string name="home_specification">Spesifikasi Rumah</string>
+    <string name="ajukan">Ajukan</string>
 </resources>

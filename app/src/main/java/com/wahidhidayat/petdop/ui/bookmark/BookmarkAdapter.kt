@@ -14,15 +14,15 @@ import com.wahidhidayat.petdop.ui.detailpost.DetailPostActivity
 import kotlinx.android.synthetic.main.item_bookmark.view.*
 
 class BookmarkAdapter(
-        private val mListBookmark: MutableList<Post?>,
-        private val mContext: Context?,
-        private val mDb: FirebaseFirestore
+    private val mListBookmark: MutableList<Post?>,
+    private val mContext: Context?,
+    private val mDb: FirebaseFirestore
 ) : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(bookmark: Post) {
             Glide.with(itemView.context)
-                    .load(bookmark.photos[0])
-                    .into(itemView.image_pet)
+                .load(bookmark.photos[0])
+                .into(itemView.image_pet)
 
             itemView.text_name.text = bookmark.name
             itemView.text_category.text = bookmark.category
@@ -39,7 +39,7 @@ class BookmarkAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_bookmark, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_bookmark, parent, false)
         return ViewHolder(view)
     }
 

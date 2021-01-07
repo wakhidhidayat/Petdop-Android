@@ -23,8 +23,8 @@ class BookmarkFragment : Fragment() {
     private val mAdapter = BookmarkAdapter(mList, context, FirebaseFirestore.getInstance())
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_bookmark, container, false)
@@ -44,28 +44,28 @@ class BookmarkFragment : Fragment() {
 
     private fun loadBookmarks() {
         mUserReference.document(mUserEmail!!).collection("bookmarks")
-                .get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        if (pb_bookmark != null) {
-                            pb_bookmark.visibility = View.GONE
-                        }
-
-                        for (doc in task.result!!) {
-                            val post: Post = doc.toObject(Post::class.java)
-                            mList.add(post)
-                            mAdapter.notifyDataSetChanged()
-                        }
-                    } else {
-                        Toast.makeText(
-                                activity,
-                                "Error getting documents: ${task.exception}",
-                                Toast.LENGTH_SHORT
-                        ).show()
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    if (pb_bookmark != null) {
+                        pb_bookmark.visibility = View.GONE
                     }
+
+                    for (doc in task.result!!) {
+                        val post: Post = doc.toObject(Post::class.java)
+                        mList.add(post)
+                        mAdapter.notifyDataSetChanged()
+                    }
+                } else {
+                    Toast.makeText(
+                        activity,
+                        "Error getting documents: ${task.exception}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                .addOnFailureListener {
-                    Toast.makeText(activity, "Error getting documents: $it", Toast.LENGTH_SHORT).show()
-                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(activity, "Error getting documents: $it", Toast.LENGTH_SHORT).show()
+            }
     }
 }

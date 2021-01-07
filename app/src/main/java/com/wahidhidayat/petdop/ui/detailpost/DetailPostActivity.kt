@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.synnapps.carouselview.ImageListener
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.Post
+import com.wahidhidayat.petdop.ui.adoption.AdoptionActivity
 import kotlinx.android.synthetic.main.activity_detail_post.*
 
 class DetailPostActivity : AppCompatActivity() {
@@ -49,9 +50,19 @@ class DetailPostActivity : AppCompatActivity() {
         }
 
         if (inBookmark) {
-            image_like.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_favorite_24))
+            image_like.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.ic_baseline_favorite_24
+                )
+            )
         } else {
-            image_like.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_favorite_border_24))
+            image_like.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.ic_baseline_favorite_border_24
+                )
+            )
         }
         Log.d("isBookmarked", inBookmark.toString())
 
@@ -62,52 +73,49 @@ class DetailPostActivity : AppCompatActivity() {
                 addToBookmark()
             }
         }
+
+        btn_adoption.setOnClickListener {
+            val intent = Intent(this, AdoptionActivity::class.java)
+            intent.putExtra(AdoptionActivity.EXTRA_POST, post)
+            startActivity(intent)
+        }
     }
 
     private fun addToBookmark() {
         mUserReference.document(mUserEmail!!).collection("bookmarks").document(post.id).set(post)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Berhasil menambahkan ke bookmark!", Toast.LENGTH_SHORT).show()
-                    image_like.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_favorite_24))
-                    inBookmark = true
-                }
-                .addOnFailureListener {
-                    Toast.makeText(this, "Gagal menambahkan ke bookmark: $it", Toast.LENGTH_SHORT).show()
-                }
+            .addOnSuccessListener {
+                Toast.makeText(this, "Berhasil menambahkan ke bookmark!", Toast.LENGTH_SHORT).show()
+                image_like.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.ic_baseline_favorite_24
+                    )
+                )
+                inBookmark = true
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Gagal menambahkan ke bookmark: $it", Toast.LENGTH_SHORT)
+                    .show()
+            }
     }
 
     private fun removeFromBookmark() {
         mUserReference.document(mUserEmail!!).collection("bookmarks").document(post.id).delete()
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Berhasil menghapus dari bookmark!", Toast.LENGTH_SHORT).show()
-                    image_like.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_favorite_border_24))
-                    inBookmark = false
-                }
-                .addOnFailureListener {
-                    Toast.makeText(this, "Gagal menambahkan ke bookmark: $it", Toast.LENGTH_SHORT).show()
-                }
+            .addOnSuccessListener {
+                Toast.makeText(this, "Berhasil menghapus dari bookmark!", Toast.LENGTH_SHORT).show()
+                image_like.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.ic_baseline_favorite_border_24
+                    )
+                )
+                inBookmark = false
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Gagal menambahkan ke bookmark: $it", Toast.LENGTH_SHORT)
+                    .show()
+            }
     }
-
-//    private fun checkBookmarks() {
-//        mUserReference.document(mUserEmail!!).collection("bookmarks").get()
-//                .addOnCompleteListener {
-//                    if(it.result!!.isEmpty) {
-//                        Log.d("document", "kosong")
-//                        inBookmark = false
-//                        addToBookmark()
-//                    } else {
-//                        for(document in it.result!!) {
-//                            Log.d("document", document.id)
-//                            if(document.id == post.id) {
-//                                inBookmark = true
-//                            }
-//                        }
-//                    }
-//                }
-//                .addOnFailureListener {
-//                    Toast.makeText(this, "Gagal memuat data, cek koneksi anda", Toast.LENGTH_SHORT).show()
-//                }
-//    }
 
     private fun insertData() {
         image_carousel.setImageListener(imageListener)
@@ -128,11 +136,11 @@ class DetailPostActivity : AppCompatActivity() {
     }
 
     private var imageListener: ImageListener =
-            ImageListener { position, imageView ->
-                Glide.with(this)
-                        .load(post.photos[position])
-                        .into(imageView)
-            }
+        ImageListener { position, imageView ->
+            Glide.with(this)
+                .load(post.photos[position])
+                .into(imageView)
+        }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

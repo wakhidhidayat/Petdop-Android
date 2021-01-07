@@ -14,15 +14,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class NewsAdapter(
-        private val listNews: List<NewsData>,
-        private val context: Context?
+    private val listNews: List<NewsData>,
+    private val context: Context?
 ) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(news: NewsData) {
             with(itemView) {
                 Glide.with(itemView.context)
-                        .load(news.image)
-                        .into(image_news)
+                    .load(news.image)
+                    .into(image_news)
 
                 text_news_title.text = news.title
                 text_source.text = news.source?.name

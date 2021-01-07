@@ -319,12 +319,12 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_pendaftaran_baru"
+                app:layout_constraintEnd_toStartOf="@+id/btn_adoption"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/btn_pendaftaran_baru"
+                android:id="@+id/btn_adoption"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="8dp"
