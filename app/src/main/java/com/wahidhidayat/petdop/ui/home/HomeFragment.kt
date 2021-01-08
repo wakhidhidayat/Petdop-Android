@@ -1,5 +1,6 @@
 package com.wahidhidayat.petdop.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.wahidhidayat.petdop.network.NewsApiService
 import com.wahidhidayat.petdop.ui.home.adapter.NearbyAdapter
 import com.wahidhidayat.petdop.ui.home.adapter.NewsAdapter
 import com.wahidhidayat.petdop.ui.home.adapter.PopularAdapter
+import com.wahidhidayat.petdop.ui.notification.NotificationActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -69,6 +71,10 @@ class HomeFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             adapter = newsAdapter
+        }
+
+        image_notification.setOnClickListener {
+            startActivity(Intent(activity, NotificationActivity::class.java))
         }
     }
 
