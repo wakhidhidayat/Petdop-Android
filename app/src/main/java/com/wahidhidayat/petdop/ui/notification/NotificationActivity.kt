@@ -56,7 +56,6 @@ class NotificationActivity : AppCompatActivity() {
                         if(adoption.user.email == mUserEmail.toString()) {
                             adoptionSentList.add(adoption)
                             mSentAdapter.notifyDataSetChanged()
-
                         }
 
                         if(adoption.post.author == mUserEmail.toString()) {

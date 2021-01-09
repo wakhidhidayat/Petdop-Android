@@ -31,4 +31,13 @@
     <string name="adoption_form">Form Pengajuan Adopsi</string>
     <string name="home_specification">Spesifikasi Rumah</string>
     <string name="ajukan">Ajukan</string>
+    <string name="write_pet_name">Nama Hewan</string>
+    <string name="jenis_kelamin">Jenis Kelamin</string>
+    <string name="male">Jantan</string>
+    <string name="female">Betina</string>
+    <string name="pet_category">Jenis Hewan</string>
+    <string name="dog">Anjing</string>
+    <string name="cat">Kucing</string>
+    <string name="tervaksin">Tervaksin</string>
+    <string name="belum_tervaksin">Belum Tervaksin</string>
 </resources>
