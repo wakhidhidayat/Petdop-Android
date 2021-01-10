@@ -42,4 +42,7 @@
     <string name="belum_tervaksin">Belum Tervaksin</string>
     <string name="pengajuan_dikirim">Pengajuan Dikirim</string>
     <string name="pengajuan_diterima">Pengajuan Diterima</string>
+    <string name="approve">Terima Adopsi</string>
+    <string name="reject">Tolak Adopsi</string>
+    <string name="cancel">Batalkan Adopsi</string>
 </resources>

@@ -14,10 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".ui.detailadoption.AdoptionSentActivity"></activity>
+        <activity android:name=".ui.detailadoption.AdoptionReceivedActivity" />
         <activity android:name=".ui.notification.NotificationActivity" />
         <activity
             android:name=".ui.adoption.AdoptionActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ui.detailpost.DetailPhotoActivity" />
         <activity android:name=".ui.detailpost.DetailPostActivity" />
         <activity android:name=".ui.login.LoginActivity">
@@ -29,7 +31,7 @@
         </activity>
         <activity
             android:name=".ui.main.MainActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>
