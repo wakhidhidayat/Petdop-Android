@@ -33,6 +33,12 @@ class NotificationActivity : AppCompatActivity() {
 
         loadAdoptions()
 
+        swipe_notification.setOnRefreshListener {
+            adoptionReceivedList.clear()
+            adoptionSentList.clear()
+            loadAdoptions()
+        }
+
         rv_adoption_sent.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this@NotificationActivity, LinearLayoutManager.VERTICAL, false)
@@ -47,8 +53,10 @@ class NotificationActivity : AppCompatActivity() {
     }
 
     private fun loadAdoptions() {
+        swipe_notification.isRefreshing = true
         mAdoptionReference.get()
                 .addOnCompleteListener {
+                    swipe_notification.isRefreshing = false
                     for (document in it.result!!) {
                         val adoption: Adoption = document.toObject(Adoption::class.java)
                         if (adoption.user.email == mUserEmail.toString()) {

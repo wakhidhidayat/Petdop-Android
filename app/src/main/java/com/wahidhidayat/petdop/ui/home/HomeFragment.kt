@@ -51,10 +51,16 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        text_name.text = FirebaseAuth.getInstance().currentUser?.displayName
-
-        loadPosts()
+        setName()
         loadNews()
+        loadPosts()
+
+        swipe_home.setOnRefreshListener {
+            newsList.clear()
+            postList.clear()
+            loadNews()
+            loadPosts()
+        }
 
         rv_near_you.apply {
             setHasFixedSize(true)
@@ -86,10 +92,6 @@ class HomeFragment : Fragment() {
                 .get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        if (pb_home != null) {
-                            pb_home.visibility = View.GONE
-                        }
-
                         for (doc in task.result!!) {
                             val post: Post = doc.toObject(Post::class.java)
                             postList.add(post)
@@ -111,11 +113,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadNews() {
+        swipe_home.isRefreshing = true
         val service = NewsApiService.buildService(ApiEndpoints::class.java)
         val call = service.getNews("kucing-anjing", BuildConfig.NEWS_API_KEY)
         call.enqueue(object : Callback<News> {
             override fun onResponse(call: Call<News>, response: Response<News>) {
                 if (response.isSuccessful) {
+                    swipe_home.isRefreshing = false
                     val body = response.body()
                     if (body != null) {
                         newsList.addAll(body.articles)
@@ -134,5 +138,16 @@ class HomeFragment : Fragment() {
                 Toast.makeText(activity, "Error getting news: $t", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun setName() {
+        val user = FirebaseAuth.getInstance().currentUser
+        val firstName = firstWord(user?.displayName.toString())
+        text_name.text = firstName
+    }
+
+    private fun firstWord(input: String): String {
+        return input.split(" ".toRegex())
+                .toTypedArray()[0]
     }
 }
