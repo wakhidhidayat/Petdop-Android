@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wahidhidayat.petdop.BuildConfig
 import com.wahidhidayat.petdop.R
@@ -49,6 +50,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        text_name.text = FirebaseAuth.getInstance().currentUser?.displayName
 
         loadPosts()
         loadNews()

@@ -40,4 +40,6 @@
     <string name="cat">Kucing</string>
     <string name="tervaksin">Tervaksin</string>
     <string name="belum_tervaksin">Belum Tervaksin</string>
+    <string name="pengajuan_dikirim">Pengajuan Dikirim</string>
+    <string name="pengajuan_diterima">Pengajuan Diterima</string>
 </resources>

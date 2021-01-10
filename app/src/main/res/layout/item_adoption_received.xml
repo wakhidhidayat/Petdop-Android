@@ -34,10 +34,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins_semibold"
-                tools:text="Guinevere"
                 android:textColor="@color/colorWhite"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Guinevere" />
 
             <TextView
                 android:id="@+id/text_adoption"
@@ -46,11 +47,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/poppins"
-                tools:text="Mengajukan permohnan mengadopsi"
                 android:textColor="@color/colorWhite"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_name" />
+                app:layout_constraintTop_toBottomOf="@+id/text_name"
+                tools:text="Mengajukan permohnan mengadopsi" />
 
             <TextView
                 android:id="@+id/textView"
@@ -60,7 +61,7 @@
                 android:fontFamily="@font/poppins"
                 android:text="Status Proses"
                 android:textColor="@color/colorWhite"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@+id/text_category"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/text_name" />

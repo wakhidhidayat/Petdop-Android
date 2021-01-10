@@ -2,13 +2,16 @@ package com.wahidhidayat.petdop.ui.notification
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.Adoption
+import kotlinx.android.synthetic.main.activity_detail_post.*
 import kotlinx.android.synthetic.main.activity_notification.*
+import kotlinx.android.synthetic.main.activity_notification.toolbar
 
 class NotificationActivity : AppCompatActivity() {
 
@@ -27,6 +30,8 @@ class NotificationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_notification)
 
         setSupportActionBar(toolbar)
+        supportActionBar?.title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         loadAdoptions()
 
@@ -60,5 +65,16 @@ class NotificationActivity : AppCompatActivity() {
                     }
                     Log.d("adoptions", adoptionReceivedList.toString())
                 }
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

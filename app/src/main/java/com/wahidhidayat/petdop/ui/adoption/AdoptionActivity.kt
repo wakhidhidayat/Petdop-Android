@@ -1,6 +1,7 @@
 package com.wahidhidayat.petdop.ui.adoption
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,6 +11,8 @@ import com.wahidhidayat.petdop.data.Post
 import com.wahidhidayat.petdop.data.User
 import com.wahidhidayat.petdop.ui.detailpost.DetailPostActivity
 import kotlinx.android.synthetic.main.activity_adoption.*
+import kotlinx.android.synthetic.main.activity_adoption.toolbar
+import kotlinx.android.synthetic.main.activity_notification.*
 
 class AdoptionActivity : AppCompatActivity() {
 
@@ -28,6 +31,10 @@ class AdoptionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adoption)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         post = intent.getParcelableExtra(DetailPostActivity.EXTRA_POST) as Post
 
@@ -54,5 +61,15 @@ class AdoptionActivity : AppCompatActivity() {
                     et_phone.setText(it.getString("phone"))
                     et_name.setText(it.getString("name"))
                 }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
