@@ -23,8 +23,8 @@ class BookmarkFragment : Fragment() {
     private val mAdapter = BookmarkAdapter(mList, context, FirebaseFirestore.getInstance())
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_bookmark, container, false)
@@ -35,6 +35,11 @@ class BookmarkFragment : Fragment() {
 
         loadBookmarks()
 
+        swipe_bookmark.setOnRefreshListener {
+            mList.clear()
+            loadBookmarks()
+        }
+
         rv_bookmark.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -43,29 +48,29 @@ class BookmarkFragment : Fragment() {
     }
 
     private fun loadBookmarks() {
+        swipe_bookmark.isRefreshing = true
         mUserReference.document(mUserEmail!!).collection("bookmarks")
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    if (pb_bookmark != null) {
-                        pb_bookmark.visibility = View.GONE
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        swipe_bookmark.isRefreshing = false
+                        for (doc in task.result!!) {
+                            val post: Post = doc.toObject(Post::class.java)
+                            mList.add(post)
+                            mAdapter.notifyDataSetChanged()
+                        }
+                    } else {
+                        swipe_bookmark.isRefreshing = false
+                        Toast.makeText(
+                                activity,
+                                "Error getting documents: ${task.exception}",
+                                Toast.LENGTH_SHORT
+                        ).show()
                     }
-
-                    for (doc in task.result!!) {
-                        val post: Post = doc.toObject(Post::class.java)
-                        mList.add(post)
-                        mAdapter.notifyDataSetChanged()
-                    }
-                } else {
-                    Toast.makeText(
-                        activity,
-                        "Error getting documents: ${task.exception}",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
-            }
-            .addOnFailureListener {
-                Toast.makeText(activity, "Error getting documents: $it", Toast.LENGTH_SHORT).show()
-            }
+                .addOnFailureListener {
+                    swipe_bookmark.isRefreshing = false
+                    Toast.makeText(activity, "Error getting documents: $it", Toast.LENGTH_SHORT).show()
+                }
     }
 }

@@ -12,7 +12,7 @@
 
         <ProgressBar
             android:id="@+id/pb_home"
-            style="?android:attr/progressBarStyle"
+            android:indeterminateTint="@color/colorAccent"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:visibility="visible"

@@ -51,17 +51,17 @@ class DetailPostActivity : AppCompatActivity() {
 
         if (inBookmark) {
             image_like.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.ic_baseline_favorite_24
-                )
+                    ContextCompat.getDrawable(
+                            this,
+                            R.drawable.ic_baseline_favorite_24
+                    )
             )
         } else {
             image_like.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.ic_baseline_favorite_border_24
-                )
+                    ContextCompat.getDrawable(
+                            this,
+                            R.drawable.ic_baseline_favorite_border_24
+                    )
             )
         }
         Log.d("isBookmarked", inBookmark.toString())
@@ -83,38 +83,38 @@ class DetailPostActivity : AppCompatActivity() {
 
     private fun addToBookmark() {
         mUserReference.document(mUserEmail!!).collection("bookmarks").document(post.id).set(post)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Berhasil menambahkan ke bookmark!", Toast.LENGTH_SHORT).show()
-                image_like.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.ic_baseline_favorite_24
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Berhasil menambahkan ke bookmark!", Toast.LENGTH_SHORT).show()
+                    image_like.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                    this,
+                                    R.drawable.ic_baseline_favorite_24
+                            )
                     )
-                )
-                inBookmark = true
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Gagal menambahkan ke bookmark: $it", Toast.LENGTH_SHORT)
-                    .show()
-            }
+                    inBookmark = true
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Gagal menambahkan ke bookmark: $it", Toast.LENGTH_SHORT)
+                            .show()
+                }
     }
 
     private fun removeFromBookmark() {
         mUserReference.document(mUserEmail!!).collection("bookmarks").document(post.id).delete()
-            .addOnSuccessListener {
-                Toast.makeText(this, "Berhasil menghapus dari bookmark!", Toast.LENGTH_SHORT).show()
-                image_like.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.ic_baseline_favorite_border_24
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Berhasil menghapus dari bookmark!", Toast.LENGTH_SHORT).show()
+                    image_like.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                    this,
+                                    R.drawable.ic_baseline_favorite_border_24
+                            )
                     )
-                )
-                inBookmark = false
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Gagal menambahkan ke bookmark: $it", Toast.LENGTH_SHORT)
-                    .show()
-            }
+                    inBookmark = false
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Gagal menambahkan ke bookmark: $it", Toast.LENGTH_SHORT)
+                            .show()
+                }
     }
 
     private fun insertData() {
@@ -136,11 +136,11 @@ class DetailPostActivity : AppCompatActivity() {
     }
 
     private var imageListener: ImageListener =
-        ImageListener { position, imageView ->
-            Glide.with(this)
-                .load(post.photos[position])
-                .into(imageView)
-        }
+            ImageListener { position, imageView ->
+                Glide.with(this)
+                        .load(post.photos[position])
+                        .into(imageView)
+            }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

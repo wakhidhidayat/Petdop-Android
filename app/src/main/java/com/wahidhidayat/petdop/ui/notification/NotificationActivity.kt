@@ -1,19 +1,14 @@
 package com.wahidhidayat.petdop.ui.notification
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
-import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.Adoption
-import com.wahidhidayat.petdop.data.User
-import kotlinx.android.synthetic.main.activity_detail_post.*
 import kotlinx.android.synthetic.main.activity_notification.*
-import kotlinx.android.synthetic.main.activity_notification.toolbar
 
 class NotificationActivity : AppCompatActivity() {
 
@@ -51,14 +46,14 @@ class NotificationActivity : AppCompatActivity() {
     private fun loadAdoptions() {
         mAdoptionReference.get()
                 .addOnCompleteListener {
-                    for(document in it.result!!) {
+                    for (document in it.result!!) {
                         val adoption: Adoption = document.toObject(Adoption::class.java)
-                        if(adoption.user.email == mUserEmail.toString()) {
+                        if (adoption.user.email == mUserEmail.toString()) {
                             adoptionSentList.add(adoption)
                             mSentAdapter.notifyDataSetChanged()
                         }
 
-                        if(adoption.post.author == mUserEmail.toString()) {
+                        if (adoption.post.author == mUserEmail.toString()) {
                             adoptionReceivedList.add(adoption)
                             mReceivedAdapter.notifyDataSetChanged()
                         }
