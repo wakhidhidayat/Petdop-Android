@@ -9,9 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.Adoption
-import kotlinx.android.synthetic.main.activity_detail_post.*
 import kotlinx.android.synthetic.main.activity_notification.*
-import kotlinx.android.synthetic.main.activity_notification.toolbar
 
 class NotificationActivity : AppCompatActivity() {
 

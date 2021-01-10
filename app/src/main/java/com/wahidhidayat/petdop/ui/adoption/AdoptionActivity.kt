@@ -11,8 +11,6 @@ import com.wahidhidayat.petdop.data.Post
 import com.wahidhidayat.petdop.data.User
 import com.wahidhidayat.petdop.ui.detailpost.DetailPostActivity
 import kotlinx.android.synthetic.main.activity_adoption.*
-import kotlinx.android.synthetic.main.activity_adoption.toolbar
-import kotlinx.android.synthetic.main.activity_notification.*
 
 class AdoptionActivity : AppCompatActivity() {
 
@@ -49,8 +47,8 @@ class AdoptionActivity : AppCompatActivity() {
                     ""
             )
             val adoption =
-                    Adoption(et_cage.text.toString(), et_home.text.toString(), "Menunggu", post, user)
-            mAdoptionReference.document().set(adoption)
+                    Adoption(mAdoptionReference.document().id, et_cage.text.toString(), et_home.text.toString(), "Menunggu", post, user)
+            mAdoptionReference.document(adoption.id).set(adoption)
         }
     }
 

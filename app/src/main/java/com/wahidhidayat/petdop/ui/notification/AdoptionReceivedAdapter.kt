@@ -1,6 +1,7 @@
 package com.wahidhidayat.petdop.ui.notification
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.Adoption
+import com.wahidhidayat.petdop.ui.detailadoption.AdoptionReceivedActivity
 import kotlinx.android.synthetic.main.item_adoption_received.view.*
 
 class AdoptionReceivedAdapter(
@@ -20,6 +22,11 @@ class AdoptionReceivedAdapter(
             itemView.text_name.text = adoption.user.name
             itemView.text_adoption.text = "Mengajukan permohonan mengadopsi ${adoption.post.name}"
             itemView.text_status.text = adoption.status
+            itemView.cv_notification.setOnClickListener {
+                val intent = Intent(itemView.context, AdoptionReceivedActivity::class.java)
+                intent.putExtra(AdoptionReceivedActivity.EXTRA_ADOPTION, adoption)
+                itemView.context.startActivity(intent)
+            }
         }
     }
 
