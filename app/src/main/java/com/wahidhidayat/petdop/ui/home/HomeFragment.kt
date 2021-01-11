@@ -41,8 +41,8 @@ class HomeFragment : Fragment() {
     private val newsAdapter = NewsAdapter(newsList, context)
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -65,14 +65,14 @@ class HomeFragment : Fragment() {
         rv_near_you.apply {
             setHasFixedSize(true)
             layoutManager =
-                    LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = nearbyAdapter
         }
 
         rv_popular.apply {
             setHasFixedSize(true)
             layoutManager =
-                    LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = popularAdapter
         }
 
@@ -89,27 +89,27 @@ class HomeFragment : Fragment() {
 
     private fun loadPosts() {
         mDb.collection("posts")
-                .get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        for (doc in task.result!!) {
-                            val post: Post = doc.toObject(Post::class.java)
-                            postList.add(post)
-                            nearbyAdapter.notifyDataSetChanged()
-                            popularAdapter.notifyDataSetChanged()
-                        }
-
-                    } else {
-                        Toast.makeText(
-                                activity,
-                                "Error getting documents: ${task.exception}",
-                                Toast.LENGTH_SHORT
-                        ).show()
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (doc in task.result!!) {
+                        val post: Post = doc.toObject(Post::class.java)
+                        postList.add(post)
+                        nearbyAdapter.notifyDataSetChanged()
+                        popularAdapter.notifyDataSetChanged()
                     }
+
+                } else {
+                    Toast.makeText(
+                        activity,
+                        "Error getting documents: ${task.exception}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                .addOnFailureListener {
-                    Toast.makeText(activity, "Error getting documents: $it", Toast.LENGTH_SHORT).show()
-                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(activity, "Error getting documents: $it", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun loadNews() {
@@ -119,7 +119,7 @@ class HomeFragment : Fragment() {
         call.enqueue(object : Callback<News> {
             override fun onResponse(call: Call<News>, response: Response<News>) {
                 if (response.isSuccessful) {
-                    if(swipe_home != null) {
+                    if (swipe_home != null) {
                         swipe_home.isRefreshing = false
                     }
                     val body = response.body()
@@ -129,9 +129,9 @@ class HomeFragment : Fragment() {
                     }
                 } else {
                     Toast.makeText(
-                            activity,
-                            "Something went wrong, try again later",
-                            Toast.LENGTH_SHORT
+                        activity,
+                        "Something went wrong, try again later",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
             }
@@ -150,6 +150,6 @@ class HomeFragment : Fragment() {
 
     private fun firstWord(input: String): String {
         return input.split(" ".toRegex())
-                .toTypedArray()[0]
+            .toTypedArray()[0]
     }
 }

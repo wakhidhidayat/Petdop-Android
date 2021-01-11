@@ -40,25 +40,32 @@ class AdoptionActivity : AppCompatActivity() {
 
         btn_ajukan.setOnClickListener {
             val user = User(
-                    mUserEmail.toString(),
-                    et_name.text.toString(),
-                    et_phone.text.toString(),
-                    et_address.text.toString(),
-                    ""
+                mUserEmail.toString(),
+                et_name.text.toString(),
+                et_phone.text.toString(),
+                et_address.text.toString(),
+                ""
             )
             val adoption =
-                    Adoption(mAdoptionReference.document().id, et_cage.text.toString(), et_home.text.toString(), "Menunggu", post, user)
+                Adoption(
+                    mAdoptionReference.document().id,
+                    et_cage.text.toString(),
+                    et_home.text.toString(),
+                    "Menunggu",
+                    post,
+                    user
+                )
             mAdoptionReference.document(adoption.id).set(adoption)
         }
     }
 
     private fun getUser() {
         mUserReference.document(mUserEmail!!).get()
-                .addOnSuccessListener {
-                    et_address.setText(it.getString("address"))
-                    et_phone.setText(it.getString("phone"))
-                    et_name.setText(it.getString("name"))
-                }
+            .addOnSuccessListener {
+                et_address.setText(it.getString("address"))
+                et_phone.setText(it.getString("phone"))
+                et_name.setText(it.getString("name"))
+            }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

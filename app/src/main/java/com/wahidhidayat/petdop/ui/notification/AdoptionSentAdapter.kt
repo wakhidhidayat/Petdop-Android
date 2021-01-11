@@ -13,9 +13,9 @@ import com.wahidhidayat.petdop.ui.detailadoption.AdoptionSentActivity
 import kotlinx.android.synthetic.main.item_adoption_sent.view.*
 
 class AdoptionSentAdapter(
-        private val mList: MutableList<Adoption?>,
-        private val mContext: Context?,
-        private val mDb: FirebaseFirestore
+    private val mList: MutableList<Adoption?>,
+    private val mContext: Context?,
+    private val mDb: FirebaseFirestore
 ) : RecyclerView.Adapter<AdoptionSentAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(adoption: Adoption) {
@@ -33,7 +33,7 @@ class AdoptionSentAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_adoption_sent, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_adoption_sent, parent, false)
         return ViewHolder(view)
     }
 
