@@ -10,10 +10,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.Adoption
 import kotlinx.android.synthetic.main.activity_adoption_received.*
-import kotlinx.android.synthetic.main.activity_adoption_received.text_address
-import kotlinx.android.synthetic.main.activity_adoption_received.text_name
-import kotlinx.android.synthetic.main.activity_adoption_received.toolbar
-import kotlinx.android.synthetic.main.activity_detail_post.*
 
 class AdoptionReceivedActivity : AppCompatActivity() {
     companion object {
@@ -51,7 +47,12 @@ class AdoptionReceivedActivity : AppCompatActivity() {
         }
 
         image_message.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://wa.me/${adoption.user.phone}")))
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("http://wa.me/${adoption.user.phone}")
+                )
+            )
         }
     }
 

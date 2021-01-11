@@ -136,7 +136,7 @@ class DetailPostActivity : AppCompatActivity() {
         text_reason.text = post.reason
         text_name.text = post.name
         text_weight.text = post.weight.toString() + "kg"
-        if(post.status == "Tidak Tersedia") {
+        if (post.status == "Tidak Tersedia") {
             text_available.text = getString(R.string.not_available)
         }
         if (post.tervaksin) {

@@ -15,8 +15,6 @@ import com.wahidhidayat.petdop.data.User
 import com.wahidhidayat.petdop.ui.detailpost.DetailPostActivity
 import com.wahidhidayat.petdop.ui.notification.NotificationActivity
 import kotlinx.android.synthetic.main.activity_adoption.*
-import kotlinx.android.synthetic.main.activity_adoption.et_name
-import kotlinx.android.synthetic.main.activity_adoption.toolbar
 
 class AdoptionActivity : AppCompatActivity() {
 
@@ -71,9 +69,9 @@ class AdoptionActivity : AppCompatActivity() {
                         pb_adoption.visibility = View.GONE
                     }
                     val snackbar = Snackbar.make(
-                            constraintLayout,
-                            "Berhasil mengajukan adopsi!",
-                            Snackbar.LENGTH_LONG
+                        constraintLayout,
+                        "Berhasil mengajukan adopsi!",
+                        Snackbar.LENGTH_LONG
                     )
                     snackbar.setAction("Lihat Pengajuan") {
                         val intent = Intent(this, NotificationActivity::class.java)

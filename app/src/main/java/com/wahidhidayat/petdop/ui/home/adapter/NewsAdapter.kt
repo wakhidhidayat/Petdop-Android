@@ -1,6 +1,7 @@
 package com.wahidhidayat.petdop.ui.home.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.NewsData
+import com.wahidhidayat.petdop.ui.detailnews.DetailNewsActivity
 import kotlinx.android.synthetic.main.item_news.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.text.SimpleDateFormat
@@ -27,6 +29,12 @@ class NewsAdapter(
                 text_news_title.text = news.title
                 text_source.text = news.source?.name
                 text_news_date.text = "\u2022" + dateTime(news.date)
+
+                cv_news.setOnClickListener {
+                    val intent = Intent(itemView.context, DetailNewsActivity::class.java)
+                    intent.putExtra(DetailNewsActivity.EXTRA_NEWS, news)
+                    itemView.context.startActivity(intent)
+                }
             }
         }
 

@@ -66,6 +66,7 @@
         android:fontFamily="@font/poppins"
         android:inputType="phone"
         android:padding="8dp"
+        android:text="62"
         android:textColor="@color/colorTextSecondary"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"

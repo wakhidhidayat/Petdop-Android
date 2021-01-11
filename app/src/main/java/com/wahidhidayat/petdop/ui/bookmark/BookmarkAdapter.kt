@@ -6,7 +6,6 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,10 +14,6 @@ import com.wahidhidayat.petdop.data.Post
 import com.wahidhidayat.petdop.ui.adoption.AdoptionActivity
 import com.wahidhidayat.petdop.ui.detailpost.DetailPostActivity
 import kotlinx.android.synthetic.main.item_bookmark.view.*
-import kotlinx.android.synthetic.main.item_bookmark.view.btn_adoption
-import kotlinx.android.synthetic.main.item_bookmark.view.text_category
-import kotlinx.android.synthetic.main.item_bookmark.view.text_gender
-import kotlinx.android.synthetic.main.item_bookmark.view.text_name
 
 class BookmarkAdapter(
     private val mListBookmark: MutableList<Post?>,
@@ -50,7 +45,12 @@ class BookmarkAdapter(
 
 
             itemView.image_message.setOnClickListener {
-                itemView.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://wa.me/${bookmark.phone}")))
+                itemView.context.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("http://wa.me/${bookmark.phone}")
+                    )
+                )
             }
         }
     }

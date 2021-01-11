@@ -5,7 +5,6 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -141,7 +140,7 @@ class AccountFragment : Fragment() {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             image_avatar.setImageBitmap(imageBitmap)
 
-            if(imageUri != null) {
+            if (imageUri != null) {
                 val imageRef = mStorageRef.child("images/${UUID.randomUUID()}")
 
                 imageRef.putFile(imageUri)
