@@ -60,7 +60,10 @@ class LoginActivity : AppCompatActivity() {
 
     private fun signIn() {
         googleSignInClient.signOut()
-        pb_login.visibility = View.GONE
+        if (pb_login != null) {
+            pb_login.visibility = View.GONE
+        }
+
 
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)

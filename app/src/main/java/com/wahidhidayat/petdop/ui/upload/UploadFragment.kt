@@ -18,12 +18,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.Post
 import com.wahidhidayat.petdop.ui.account.AccountFragment
+import com.wahidhidayat.petdop.ui.detailpost.DetailPostActivity
 import kotlinx.android.synthetic.main.fragment_upload.*
 
 
@@ -65,11 +67,15 @@ class UploadFragment : Fragment() {
         }
 
         btn_upload.setOnClickListener {
+            if (pb_upload != null) {
+                pb_upload.visibility = View.VISIBLE
+            }
+
             val categoryId: Int = radioGroup1.checkedRadioButtonId
             val tervaksinId: Int = radioGroup2.checkedRadioButtonId
             val genderId: Int = radioGroup.checkedRadioButtonId
 
-            if (genderId != -1 && categoryId != -1 && tervaksinId != -1) {
+            if (genderId != -1 && categoryId != -1 && tervaksinId != -1 && et_age.text.toString() != "" && et_description.text.toString() != "" && et_name.text.toString() != "" && et_reason.text.toString() != "" && et_weight.text.toString() != "" && mListName.isNotEmpty()) {
                 val gender = view.findViewById(genderId) as RadioButton
                 val genderName = gender.text.toString()
 
@@ -107,14 +113,27 @@ class UploadFragment : Fragment() {
                         Log.d("postData", post.toString())
                         mPostRef.document(id).set(post)
                             .addOnSuccessListener {
-                                Toast.makeText(
-                                    activity,
+                                if (pb_upload != null) {
+                                    pb_upload.visibility = View.GONE
+                                }
+                                val snackbar = Snackbar.make(
+                                    constraintLayout,
                                     "Berhasil mengupload postingan!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                    Snackbar.LENGTH_SHORT
+                                )
+                                snackbar.setAction("Lihat Post", View.OnClickListener {
+                                    val intent = Intent(activity, DetailPostActivity::class.java)
+                                    intent.putExtra(DetailPostActivity.EXTRA_POST, post)
+                                    startActivity(intent)
+                                })
+                                snackbar.show()
                             }
                     }
             } else {
+                if (pb_upload != null) {
+                    pb_upload.visibility = View.GONE
+                }
+
                 Toast.makeText(activity, "Mohon isi form dengan lengkap!", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -166,7 +185,7 @@ class UploadFragment : Fragment() {
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
             if (data?.clipData != null) {
                 val totalItemSelected = data.clipData!!.itemCount
-                for (i in 0..totalItemSelected - 1) {
+                for (i in 0 until totalItemSelected) {
                     val fileUri = data.clipData!!.getItemAt(i).uri
                     val fileName = getFileName(fileUri)
                     if (fileName != null) {
@@ -197,12 +216,10 @@ class UploadFragment : Fragment() {
         var result: String? = null
         if (uri.scheme.equals("content")) {
             val cursor: Cursor? = context?.contentResolver?.query(uri, null, null, null, null)
-            try {
+            cursor.use { cursor ->
                 if (cursor != null && cursor.moveToFirst()) {
                     result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
                 }
-            } finally {
-                cursor?.close()
             }
         }
         if (result == null) {

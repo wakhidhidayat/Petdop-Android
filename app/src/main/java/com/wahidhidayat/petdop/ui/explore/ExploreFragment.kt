@@ -45,12 +45,18 @@ class ExploreFragment : Fragment() {
     }
 
     private fun loadPosts() {
-        swipe_explore.isRefreshing = true
+        if (swipe_explore != null) {
+            swipe_explore.isRefreshing = true
+        }
+
         mDb.collection("posts")
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    swipe_explore.isRefreshing = false
+                    if (swipe_explore != null) {
+                        swipe_explore.isRefreshing = false
+                    }
+
                     for (doc in task.result!!) {
                         val post: Post = doc.toObject(Post::class.java)
                         postList.add(post)
@@ -58,7 +64,10 @@ class ExploreFragment : Fragment() {
                     }
 
                 } else {
-                    swipe_explore.isRefreshing = false
+                    if (swipe_explore != null) {
+                        swipe_explore.isRefreshing = false
+                    }
+
                     Toast.makeText(
                         activity,
                         "Error getting documents: ${task.exception}",
@@ -67,7 +76,9 @@ class ExploreFragment : Fragment() {
                 }
             }
             .addOnFailureListener {
-                swipe_explore.isRefreshing = false
+                if (swipe_explore != null) {
+                    swipe_explore.isRefreshing = false
+                }
                 Toast.makeText(activity, "Error getting documents: $it", Toast.LENGTH_SHORT).show()
             }
     }

@@ -2,6 +2,7 @@ package com.wahidhidayat.petdop.ui.adoption
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,6 +40,10 @@ class AdoptionActivity : AppCompatActivity() {
         getUser()
 
         btn_ajukan.setOnClickListener {
+            if (pb_adoption != null) {
+                pb_adoption.visibility = View.VISIBLE
+            }
+
             val user = User(
                 mUserEmail.toString(),
                 et_name.text.toString(),
@@ -56,6 +61,11 @@ class AdoptionActivity : AppCompatActivity() {
                     user
                 )
             mAdoptionReference.document(adoption.id).set(adoption)
+                .addOnSuccessListener {
+                    if (pb_adoption != null) {
+                        pb_adoption.visibility = View.GONE
+                    }
+                }
         }
     }
 

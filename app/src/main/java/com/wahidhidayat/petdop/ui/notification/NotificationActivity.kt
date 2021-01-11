@@ -57,10 +57,16 @@ class NotificationActivity : AppCompatActivity() {
     }
 
     private fun loadAdoptions() {
-        swipe_notification.isRefreshing = true
+        if (swipe_notification != null) {
+            swipe_notification.isRefreshing = true
+        }
+
         mAdoptionReference.get()
             .addOnCompleteListener {
-                swipe_notification.isRefreshing = false
+                if (swipe_notification != null) {
+                    swipe_notification.isRefreshing = false
+                }
+
                 for (document in it.result!!) {
                     val adoption: Adoption = document.toObject(Adoption::class.java)
                     if (adoption.user.email == mUserEmail.toString()) {

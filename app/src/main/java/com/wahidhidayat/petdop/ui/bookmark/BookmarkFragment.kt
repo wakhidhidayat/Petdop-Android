@@ -48,19 +48,26 @@ class BookmarkFragment : Fragment() {
     }
 
     private fun loadBookmarks() {
-        swipe_bookmark.isRefreshing = true
+        if (swipe_bookmark != null) {
+            swipe_bookmark.isRefreshing = true
+        }
+
         mUserReference.document(mUserEmail!!).collection("bookmarks")
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    swipe_bookmark.isRefreshing = false
+                    if (swipe_bookmark != null) {
+                        swipe_bookmark.isRefreshing = false
+                    }
                     for (doc in task.result!!) {
                         val post: Post = doc.toObject(Post::class.java)
                         mList.add(post)
                         mAdapter.notifyDataSetChanged()
                     }
                 } else {
-                    swipe_bookmark.isRefreshing = false
+                    if (swipe_bookmark != null) {
+                        swipe_bookmark.isRefreshing = false
+                    }
                     Toast.makeText(
                         activity,
                         "Error getting documents: ${task.exception}",
@@ -69,7 +76,9 @@ class BookmarkFragment : Fragment() {
                 }
             }
             .addOnFailureListener {
-                swipe_bookmark.isRefreshing = false
+                if (swipe_bookmark != null) {
+                    swipe_bookmark.isRefreshing = false
+                }
                 Toast.makeText(activity, "Error getting documents: $it", Toast.LENGTH_SHORT).show()
             }
     }
