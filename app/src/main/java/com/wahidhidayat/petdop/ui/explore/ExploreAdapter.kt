@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.Post
 import com.wahidhidayat.petdop.ui.detailpost.DetailPostActivity
@@ -25,11 +26,15 @@ class ExploreAdapter(
         private val mUser = FirebaseAuth.getInstance().currentUser
         private val mUserReference = FirebaseFirestore.getInstance().collection("users")
         private val mUserEmail = mUser!!.email
+        private val mStorageRef = FirebaseStorage.getInstance().reference
 
         fun bind(post: Post) {
-            Glide.with(itemView.context)
-                    .load(post.photos[0])
-                    .into(itemView.image_pet)
+            mStorageRef.child("images/${post.photos[0]}").downloadUrl
+                .addOnSuccessListener {
+                    Glide.with(itemView.context)
+                        .load(it)
+                        .into(itemView.image_pet)
+                }
 
             itemView.image_pet.setOnClickListener {
                 mUserReference.document(mUserEmail!!).collection("bookmarks").get()

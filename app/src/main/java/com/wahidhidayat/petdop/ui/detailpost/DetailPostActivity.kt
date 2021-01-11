@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.synnapps.carouselview.ImageListener
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.Post
@@ -26,6 +27,8 @@ class DetailPostActivity : AppCompatActivity() {
     private val mUserReference = FirebaseFirestore.getInstance().collection("users")
     private val mUserEmail = mUser!!.email
     private var inBookmark = false
+
+    private val  mStorageRef = FirebaseStorage.getInstance().reference
 
     private lateinit var post: Post
 
@@ -137,9 +140,12 @@ class DetailPostActivity : AppCompatActivity() {
 
     private var imageListener: ImageListener =
             ImageListener { position, imageView ->
-                Glide.with(this)
-                        .load(post.photos[position])
-                        .into(imageView)
+                mStorageRef.child("images/${post.photos[position]}").downloadUrl
+                    .addOnSuccessListener {
+                        Glide.with(this)
+                            .load(it)
+                            .into(imageView)
+                    }
             }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

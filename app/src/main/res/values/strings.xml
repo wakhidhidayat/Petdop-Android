@@ -45,4 +45,5 @@
     <string name="approve">Terima Adopsi</string>
     <string name="reject">Tolak Adopsi</string>
     <string name="cancel">Batalkan Adopsi</string>
+    <string name="photos">Foto Hewan</string>
 </resources>

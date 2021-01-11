@@ -119,7 +119,9 @@ class HomeFragment : Fragment() {
         call.enqueue(object : Callback<News> {
             override fun onResponse(call: Call<News>, response: Response<News>) {
                 if (response.isSuccessful) {
-                    swipe_home.isRefreshing = false
+                    if(swipe_home != null) {
+                        swipe_home.isRefreshing = false
+                    }
                     val body = response.body()
                     if (body != null) {
                         newsList.addAll(body.articles)
