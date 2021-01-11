@@ -143,6 +143,7 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:indeterminateTint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -164,23 +165,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_address" />
-
-    <Button
-        android:id="@+id/btn_delete_user"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/bg_rounded_button_red"
-        android:fontFamily="@font/poppins_bold"
-        android:text="Hapus Akun"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_update_user" />
 
     <ImageView
         android:id="@+id/btn_camera"

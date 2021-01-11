@@ -1,9 +1,11 @@
 package com.wahidhidayat.petdop.ui.adoption
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wahidhidayat.petdop.R
@@ -11,7 +13,10 @@ import com.wahidhidayat.petdop.data.Adoption
 import com.wahidhidayat.petdop.data.Post
 import com.wahidhidayat.petdop.data.User
 import com.wahidhidayat.petdop.ui.detailpost.DetailPostActivity
+import com.wahidhidayat.petdop.ui.notification.NotificationActivity
 import kotlinx.android.synthetic.main.activity_adoption.*
+import kotlinx.android.synthetic.main.activity_adoption.et_name
+import kotlinx.android.synthetic.main.activity_adoption.toolbar
 
 class AdoptionActivity : AppCompatActivity() {
 
@@ -65,6 +70,16 @@ class AdoptionActivity : AppCompatActivity() {
                     if (pb_adoption != null) {
                         pb_adoption.visibility = View.GONE
                     }
+                    val snackbar = Snackbar.make(
+                            constraintLayout,
+                            "Berhasil mengajukan adopsi!",
+                            Snackbar.LENGTH_LONG
+                    )
+                    snackbar.setAction("Lihat Pengajuan") {
+                        val intent = Intent(this, NotificationActivity::class.java)
+                        startActivity(intent)
+                    }
+                    snackbar.show()
                 }
         }
     }

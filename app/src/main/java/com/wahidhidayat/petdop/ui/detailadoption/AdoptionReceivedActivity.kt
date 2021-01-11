@@ -1,5 +1,7 @@
 package com.wahidhidayat.petdop.ui.detailadoption
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -8,6 +10,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.Adoption
 import kotlinx.android.synthetic.main.activity_adoption_received.*
+import kotlinx.android.synthetic.main.activity_adoption_received.text_address
+import kotlinx.android.synthetic.main.activity_adoption_received.text_name
+import kotlinx.android.synthetic.main.activity_adoption_received.toolbar
+import kotlinx.android.synthetic.main.activity_detail_post.*
 
 class AdoptionReceivedActivity : AppCompatActivity() {
     companion object {
@@ -42,6 +48,10 @@ class AdoptionReceivedActivity : AppCompatActivity() {
         btn_reject.setOnClickListener {
             mAdoptionRef.document(adoption.id).update("status", "Ditolak")
             Toast.makeText(this, "Berhasil menolak pengajuan adopsi!", Toast.LENGTH_SHORT).show()
+        }
+
+        image_message.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://wa.me/${adoption.user.phone}")))
         }
     }
 

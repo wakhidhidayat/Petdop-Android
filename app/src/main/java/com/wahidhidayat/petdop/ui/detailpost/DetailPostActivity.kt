@@ -1,6 +1,7 @@
 package com.wahidhidayat.petdop.ui.detailpost
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -82,6 +83,10 @@ class DetailPostActivity : AppCompatActivity() {
             intent.putExtra(AdoptionActivity.EXTRA_POST, post)
             startActivity(intent)
         }
+
+        btn_message.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://wa.me/${post.phone}")))
+        }
     }
 
     private fun addToBookmark() {
@@ -124,13 +129,16 @@ class DetailPostActivity : AppCompatActivity() {
         image_carousel.setImageListener(imageListener)
         image_carousel.pageCount = post.photos.size
         text_address.text = post.address
-        text_age.text = "${post.age} tahun"
+        text_age.text = "${post.age} bulan"
         text_category.text = post.category
         text_description.text = post.description
         text_gender.text = post.gender
         text_reason.text = post.reason
         text_name.text = post.name
-        text_weight.text = post.weight.toString()
+        text_weight.text = post.weight.toString() + "kg"
+        if(post.status == "Tidak Tersedia") {
+            text_available.text = getString(R.string.not_available)
+        }
         if (post.tervaksin) {
             text_status.text = getString(R.string.vaccinated)
         }

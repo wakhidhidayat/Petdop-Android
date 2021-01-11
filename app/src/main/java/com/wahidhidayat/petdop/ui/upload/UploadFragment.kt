@@ -119,7 +119,7 @@ class UploadFragment : Fragment() {
                                 val snackbar = Snackbar.make(
                                     constraintLayout,
                                     "Berhasil mengupload postingan!",
-                                    Snackbar.LENGTH_SHORT
+                                    Snackbar.LENGTH_LONG
                                 )
                                 snackbar.setAction("Lihat Post", View.OnClickListener {
                                     val intent = Intent(activity, DetailPostActivity::class.java)

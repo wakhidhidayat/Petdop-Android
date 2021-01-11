@@ -1,6 +1,7 @@
 package com.wahidhidayat.petdop.ui.account
 
 import android.Manifest
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -34,7 +35,6 @@ class AccountFragment : Fragment() {
     private val mDb = FirebaseFirestore.getInstance()
     private val userRef = mDb.document("users/${mUser?.email.toString()}")
     private val mStorageRef = FirebaseStorage.getInstance().reference
-    private var imageUri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +56,10 @@ class AccountFragment : Fragment() {
                     documentSnapshot.getString("address"),
                     documentSnapshot.getString("avatar")
                 )
-                pb_account.visibility = View.GONE
+                if (pb_account != null) {
+                    pb_account.visibility = View.GONE
+                }
+
                 Log.d(
                     "AccountFragment",
                     "DocumentSnapshot data: ${documentSnapshot.getString("name")}."
@@ -71,7 +74,9 @@ class AccountFragment : Fragment() {
         }
 
         btn_update_user.setOnClickListener {
-            pb_account.visibility = View.VISIBLE
+            if (pb_account != null) {
+                pb_account.visibility = View.VISIBLE
+            }
 
             userRef.update(
                 mapOf(
@@ -80,12 +85,13 @@ class AccountFragment : Fragment() {
                     "phone" to et_phone.text.toString()
                 )
             ).addOnSuccessListener {
-                pb_account.visibility = View.GONE
+                if (pb_account != null) {
+                    pb_account.visibility = View.GONE
+                }
+
                 Toast.makeText(activity, "Profil berhasil di update!", Toast.LENGTH_SHORT).show()
             }
                 .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
-
-            fileUpload()
         }
     }
 
@@ -127,32 +133,37 @@ class AccountFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            imageUri = data?.data
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
+            if (pb_account != null) {
+                pb_account.visibility = View.VISIBLE
+            }
+            val imageUri = data?.data
             val imageBitmap = data?.extras?.get("data") as Bitmap
             image_avatar.setImageBitmap(imageBitmap)
-        }
-    }
 
-    private fun fileChooser() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent, 1)
-    }
+            if(imageUri != null) {
+                val imageRef = mStorageRef.child("images/${UUID.randomUUID()}")
 
-    private fun fileUpload() {
-        val imageRef = mStorageRef.child("avatars/${UUID.randomUUID()}")
-        imageRef.putFile(imageUri!!)
-            .addOnSuccessListener {
-                Toast.makeText(activity, "Upload success!", Toast.LENGTH_SHORT).show()
-                imageRef.downloadUrl.addOnSuccessListener {
-                    Log.d("uri", it.toString())
+                imageRef.putFile(imageUri)
+                    .addOnSuccessListener {
+                        if (pb_account != null) {
+                            pb_account.visibility = View.GONE
+                        }
+                        Toast.makeText(activity, "Update foto sukses!", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener {
+                        if (pb_account != null) {
+                            pb_account.visibility = View.GONE
+                        }
+                        Log.e("AccountFragment", it.toString())
+                    }
+            } else {
+                if (pb_account != null) {
+                    pb_account.visibility = View.GONE
                 }
             }
-            .addOnFailureListener {
-                Log.e("AccountFragment", it.toString())
-            }
+            Log.d("imageUri", imageUri.toString())
+        }
     }
 
     private fun getUser(
