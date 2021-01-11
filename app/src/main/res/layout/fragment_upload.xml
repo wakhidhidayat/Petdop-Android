@@ -71,7 +71,6 @@
                 android:layout_marginEnd="24dp"
                 android:background="@drawable/bg_edit_text"
                 android:fontFamily="@font/poppins"
-                android:inputType="textPersonName"
                 android:padding="8dp"
                 android:textColor="@color/colorText"
                 android:textSize="12sp"
@@ -158,17 +157,15 @@
                 android:id="@+id/text_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/bg_edit_text"
+                android:layout_marginStart="8dp"
                 android:fontFamily="@font/poppins"
                 android:padding="8dp"
                 android:textColor="@color/colorText"
                 android:textSize="14sp"
-                app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
                 app:layout_constraintBottom_toBottomOf="@id/et_age"
                 app:layout_constraintStart_toEndOf="@id/et_age"
                 app:layout_constraintTop_toTopOf="@id/et_age"
-                tools:text="Bulan" />
+                android:text="Bulan" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -260,6 +257,51 @@
                     android:textSize="12sp" />
             </RadioGroup>
 
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins"
+                android:text="@string/weight"
+                android:textColor="@color/colorText"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup2" />
+
+            <EditText
+                android:id="@+id/et_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/poppins"
+                android:inputType="number"
+                android:maxLength="2"
+                android:padding="8dp"
+                android:textColor="@color/colorText"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView15"
+                tools:text="3" />
+
+            <TextView
+                android:id="@+id/text_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/poppins"
+                android:padding="8dp"
+                android:textColor="@color/colorText"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/et_weight"
+                app:layout_constraintStart_toEndOf="@id/et_weight"
+                app:layout_constraintTop_toTopOf="@id/et_weight"
+                android:text="Kg" />
+
+
             <TextView
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
@@ -271,7 +313,8 @@
                 android:textColor="@color/colorText"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/radioGroup2" />
+                app:layout_constraintTop_toBottomOf="@id/et_weight" />
+
 
             <EditText
                 android:id="@+id/et_description"
@@ -315,6 +358,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/bg_edit_text"
                 android:fontFamily="@font/poppins"
                 android:gravity="top"
@@ -325,6 +369,7 @@
                 android:scrollbars="vertical"
                 android:textColor="@color/colorText"
                 android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView14"

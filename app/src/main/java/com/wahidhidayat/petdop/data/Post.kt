@@ -7,6 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class Post(
         val id: String,
         val address: String,
+        val phone: String,
         val age: Int,
         val author: String?,
         val category: String?,
@@ -19,5 +20,5 @@ data class Post(
         val tervaksin: Boolean,
         val weight: Double
 ) : Parcelable {
-    constructor() : this("", "", 0, "", "", "", "", "", listOf<String>(), "", "", true, 0.0)
+    constructor() : this("", "", "", 0, "", "", "", "", "", listOf<String>(), "", "", true, 0.0)
 }
