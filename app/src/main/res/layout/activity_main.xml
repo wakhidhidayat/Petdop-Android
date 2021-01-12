@@ -20,6 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@color/colorWhite"
+        app:itemIconTint="@drawable/bottom_nav_color"
+        app:itemTextColor="@drawable/bottom_nav_color"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

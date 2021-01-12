@@ -17,9 +17,9 @@ import com.wahidhidayat.petdop.ui.detailpost.DetailPostActivity
 import kotlinx.android.synthetic.main.item_popular.view.*
 
 class PopularAdapter(
-    private val mListPopular: MutableList<Post?>,
-    private val mContext: Context?,
-    private val mDb: FirebaseFirestore
+        private val mListPopular: MutableList<Post?>,
+        private val mContext: Context?,
+        private val mDb: FirebaseFirestore
 ) : RecyclerView.Adapter<PopularAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -30,39 +30,39 @@ class PopularAdapter(
 
         fun bind(popular: Post) {
             mStorageRef.child("images/${popular.photos[0]}").downloadUrl
-                .addOnSuccessListener {
-                    Glide.with(itemView.context)
-                        .load(it)
-                        .into(itemView.image_pet)
-                }
+                    .addOnSuccessListener {
+                        Glide.with(itemView.context)
+                                .load(it)
+                                .into(itemView.image_pet)
+                    }
 
             itemView.image_pet.setOnClickListener {
                 mUserReference.document(mUserEmail!!).collection("bookmarks").get()
-                    .addOnCompleteListener {
-                        var inBookmark = false
+                        .addOnCompleteListener {
+                            var inBookmark = false
 
-                        if (it.result!!.isEmpty) {
-                            inBookmark = false
-                        } else {
-                            for (document in it.result!!) {
-                                Log.d("document", document.id)
-                                if (document.id == popular.id) {
-                                    inBookmark = true
+                            if (it.result!!.isEmpty) {
+                                inBookmark = false
+                            } else {
+                                for (document in it.result!!) {
+                                    Log.d("document", document.id)
+                                    if (document.id == popular.id) {
+                                        inBookmark = true
+                                    }
                                 }
                             }
+                            val intent = Intent(itemView.context, DetailPostActivity::class.java)
+                            intent.putExtra(DetailPostActivity.EXTRA_POST, popular)
+                            intent.putExtra("inBookmark", inBookmark)
+                            itemView.context.startActivity(intent)
                         }
-                        val intent = Intent(itemView.context, DetailPostActivity::class.java)
-                        intent.putExtra(DetailPostActivity.EXTRA_POST, popular)
-                        intent.putExtra("inBookmark", inBookmark)
-                        itemView.context.startActivity(intent)
-                    }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_popular, parent, false)
+                LayoutInflater.from(parent.context).inflate(R.layout.item_popular, parent, false)
         return ViewHolder(view)
     }
 

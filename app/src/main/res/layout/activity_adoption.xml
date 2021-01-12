@@ -111,8 +111,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13"
-        tools:text="Kucing sehat sudah tervaksin, penurut dan suka makan" />
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     <TextView
         android:id="@+id/textView8"
@@ -138,12 +137,12 @@
         android:fontFamily="@font/poppins"
         android:inputType="phone"
         android:padding="8dp"
+        android:text="62"
         android:textColor="@color/colorText"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
-        tools:text="Guin" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/textView2"
@@ -168,6 +167,7 @@
         android:background="@drawable/bg_edit_text"
         android:fontFamily="@font/poppins"
         android:gravity="top"
+        android:hint="Deskripsikan rumah anda meliputi jenis(rumah/kos), ukuran, jumlah penghuni, dll."
         android:inputType="textMultiLine"
         android:overScrollMode="always"
         android:padding="8dp"
@@ -177,8 +177,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        tools:text="Deskripsikan rumah anda meliputi jenis(rumah/kos), ukuran, jumlah penghuni, dll." />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView3"
@@ -202,8 +201,8 @@
         android:layout_marginEnd="24dp"
         android:background="@drawable/bg_edit_text"
         android:fontFamily="@font/poppins"
+        android:hint="Dimana kamu akan menempatkan hewan ini?"
         android:padding="8dp"
-        android:text="Dimana kamu akan menempatkan hewan ini?"
         android:textColor="@color/colorText"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -42,8 +42,8 @@ class DetailNewsActivity : AppCompatActivity() {
 
     class WebViewArticle : WebViewClient() {
         override fun shouldOverrideUrlLoading(
-            view: WebView,
-            url: String
+                view: WebView,
+                url: String
         ): Boolean {
             view.loadUrl(url)
             return true

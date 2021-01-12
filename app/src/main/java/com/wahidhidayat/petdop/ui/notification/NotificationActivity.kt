@@ -21,9 +21,9 @@ class NotificationActivity : AppCompatActivity() {
     private val adoptionReceivedList: MutableList<Adoption?> = mutableListOf()
 
     private val mSentAdapter =
-        AdoptionSentAdapter(adoptionSentList, this, FirebaseFirestore.getInstance())
+            AdoptionSentAdapter(adoptionSentList, this, FirebaseFirestore.getInstance())
     private val mReceivedAdapter =
-        AdoptionReceivedAdapter(adoptionReceivedList, this, FirebaseFirestore.getInstance())
+            AdoptionReceivedAdapter(adoptionReceivedList, this, FirebaseFirestore.getInstance())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,14 +44,14 @@ class NotificationActivity : AppCompatActivity() {
         rv_adoption_sent.apply {
             setHasFixedSize(true)
             layoutManager =
-                LinearLayoutManager(this@NotificationActivity, LinearLayoutManager.VERTICAL, false)
+                    LinearLayoutManager(this@NotificationActivity, LinearLayoutManager.VERTICAL, false)
             adapter = mSentAdapter
         }
 
         rv_adoption_received.apply {
             setHasFixedSize(true)
             layoutManager =
-                LinearLayoutManager(this@NotificationActivity, LinearLayoutManager.VERTICAL, false)
+                    LinearLayoutManager(this@NotificationActivity, LinearLayoutManager.VERTICAL, false)
             adapter = mReceivedAdapter
         }
     }
@@ -62,25 +62,25 @@ class NotificationActivity : AppCompatActivity() {
         }
 
         mAdoptionReference.get()
-            .addOnCompleteListener {
-                if (swipe_notification != null) {
-                    swipe_notification.isRefreshing = false
-                }
-
-                for (document in it.result!!) {
-                    val adoption: Adoption = document.toObject(Adoption::class.java)
-                    if (adoption.user.email == mUserEmail.toString()) {
-                        adoptionSentList.add(adoption)
-                        mSentAdapter.notifyDataSetChanged()
+                .addOnCompleteListener {
+                    if (swipe_notification != null) {
+                        swipe_notification.isRefreshing = false
                     }
 
-                    if (adoption.post.author == mUserEmail.toString()) {
-                        adoptionReceivedList.add(adoption)
-                        mReceivedAdapter.notifyDataSetChanged()
+                    for (document in it.result!!) {
+                        val adoption: Adoption = document.toObject(Adoption::class.java)
+                        if (adoption.user.email == mUserEmail.toString()) {
+                            adoptionSentList.add(adoption)
+                            mSentAdapter.notifyDataSetChanged()
+                        }
+
+                        if (adoption.post.author == mUserEmail.toString()) {
+                            adoptionReceivedList.add(adoption)
+                            mReceivedAdapter.notifyDataSetChanged()
+                        }
                     }
+                    Log.d("adoptions", adoptionReceivedList.toString())
                 }
-                Log.d("adoptions", adoptionReceivedList.toString())
-            }
     }
 
 

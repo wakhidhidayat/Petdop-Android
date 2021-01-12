@@ -48,10 +48,10 @@ class AdoptionReceivedActivity : AppCompatActivity() {
 
         image_message.setOnClickListener {
             startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("http://wa.me/${adoption.user.phone}")
-                )
+                    Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("http://wa.me/${adoption.user.phone}")
+                    )
             )
         }
     }

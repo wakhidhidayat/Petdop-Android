@@ -48,47 +48,47 @@ class AdoptionActivity : AppCompatActivity() {
             }
 
             val user = User(
-                mUserEmail.toString(),
-                et_name.text.toString(),
-                et_phone.text.toString(),
-                et_address.text.toString(),
-                ""
+                    mUserEmail.toString(),
+                    et_name.text.toString(),
+                    et_phone.text.toString(),
+                    et_address.text.toString(),
+                    ""
             )
             val adoption =
-                Adoption(
-                    mAdoptionReference.document().id,
-                    et_cage.text.toString(),
-                    et_home.text.toString(),
-                    "Menunggu",
-                    post,
-                    user
-                )
-            mAdoptionReference.document(adoption.id).set(adoption)
-                .addOnSuccessListener {
-                    if (pb_adoption != null) {
-                        pb_adoption.visibility = View.GONE
-                    }
-                    val snackbar = Snackbar.make(
-                        constraintLayout,
-                        "Berhasil mengajukan adopsi!",
-                        Snackbar.LENGTH_LONG
+                    Adoption(
+                            mAdoptionReference.document().id,
+                            et_cage.text.toString(),
+                            et_home.text.toString(),
+                            "Menunggu",
+                            post,
+                            user
                     )
-                    snackbar.setAction("Lihat Pengajuan") {
-                        val intent = Intent(this, NotificationActivity::class.java)
-                        startActivity(intent)
+            mAdoptionReference.document(adoption.id).set(adoption)
+                    .addOnSuccessListener {
+                        if (pb_adoption != null) {
+                            pb_adoption.visibility = View.GONE
+                        }
+                        val snackbar = Snackbar.make(
+                                constraintLayout,
+                                "Berhasil mengajukan adopsi!",
+                                Snackbar.LENGTH_LONG
+                        )
+                        snackbar.setAction("Lihat Pengajuan") {
+                            val intent = Intent(this, NotificationActivity::class.java)
+                            startActivity(intent)
+                        }
+                        snackbar.show()
                     }
-                    snackbar.show()
-                }
         }
     }
 
     private fun getUser() {
         mUserReference.document(mUserEmail!!).get()
-            .addOnSuccessListener {
-                et_address.setText(it.getString("address"))
-                et_phone.setText(it.getString("phone"))
-                et_name.setText(it.getString("name"))
-            }
+                .addOnSuccessListener {
+                    et_address.setText(it.getString("address"))
+                    et_phone.setText(it.getString("phone"))
+                    et_name.setText(it.getString("name"))
+                }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

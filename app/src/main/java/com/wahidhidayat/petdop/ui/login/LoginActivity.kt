@@ -36,9 +36,9 @@ class LoginActivity : AppCompatActivity() {
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
@@ -93,59 +93,59 @@ class LoginActivity : AppCompatActivity() {
 
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // hide loading
-                    pb_login.visibility = View.GONE
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // hide loading
+                        pb_login.visibility = View.GONE
 
-                    val user = auth.currentUser
-                    val name = user?.displayName
-                    val email = user?.email
-                    val avatar = user?.photoUrl.toString()
-                    val phone = user?.phoneNumber
-                    val address = null
+                        val user = auth.currentUser
+                        val name = user?.displayName
+                        val email = user?.email
+                        val avatar = user?.photoUrl.toString()
+                        val phone = user?.phoneNumber
+                        val address = null
 
-                    val userReference = FirebaseFirestore.getInstance().collection("users")
-                    val query = userReference.whereEqualTo("email", email)
-                    query.get().addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            for (documentSnapshot: DocumentSnapshot in it.result!!) {
-                                val userEmail = documentSnapshot.get("email")
-                                if (userEmail?.equals(email)!!) {
-                                    startActivity(Intent(this, MainActivity::class.java))
+                        val userReference = FirebaseFirestore.getInstance().collection("users")
+                        val query = userReference.whereEqualTo("email", email)
+                        query.get().addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                for (documentSnapshot: DocumentSnapshot in it.result!!) {
+                                    val userEmail = documentSnapshot.get("email")
+                                    if (userEmail?.equals(email)!!) {
+                                        startActivity(Intent(this, MainActivity::class.java))
+                                    }
+                                }
+                            }
+
+                            if (it.result?.size() == 0) {
+                                Log.i(TAG, "user not exist")
+                                if (email != null && name != null) {
+                                    register(email, name, phone, address, avatar)
                                 }
                             }
                         }
-
-                        if (it.result?.size() == 0) {
-                            Log.i(TAG, "user not exist")
-                            if (email != null && name != null) {
-                                register(email, name, phone, address, avatar)
-                            }
-                        }
+                    } else {
+                        Log.e(TAG, "Something went wrong...")
                     }
-                } else {
-                    Log.e(TAG, "Something went wrong...")
                 }
-            }
     }
 
     private fun register(
-        email: String,
-        name: String,
-        phone: String?,
-        address: String?,
-        avatar: String
+            email: String,
+            name: String,
+            phone: String?,
+            address: String?,
+            avatar: String
     ) {
         val user = User(email, name, phone, address, avatar)
         db.collection("users").document(user.email)
-            .set(user)
-            .addOnSuccessListener {
-                startActivity(Intent(this, MainActivity::class.java))
-            }
-            .addOnFailureListener {
-                Log.e(TAG, it.toString())
-            }
+                .set(user)
+                .addOnSuccessListener {
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
+                .addOnFailureListener {
+                    Log.e(TAG, it.toString())
+                }
     }
 
 }

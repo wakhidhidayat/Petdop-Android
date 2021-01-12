@@ -44,17 +44,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_name" />
 
-    <ImageView
-        android:id="@+id/image_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:contentDescription="@string/message"
-        android:src="@drawable/ic_baseline_mail_24"
-        app:layout_constraintBottom_toBottomOf="@+id/text_name"
-        app:layout_constraintEnd_toStartOf="@+id/image_notification"
-        app:layout_constraintTop_toTopOf="@+id/text_name" />
-
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_home"

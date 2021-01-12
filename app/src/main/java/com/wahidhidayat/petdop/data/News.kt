@@ -7,43 +7,43 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class News(
-    @SerializedName("articles")
-    @Expose
-    val articles: List<NewsData>
+        @SerializedName("articles")
+        @Expose
+        val articles: List<NewsData>
 ) : Parcelable {
     constructor() : this(mutableListOf())
 }
 
 @Parcelize
 data class NewsData(
-    @SerializedName("title")
-    @Expose
-    val title: String,
+        @SerializedName("title")
+        @Expose
+        val title: String,
 
-    @SerializedName("urlToImage")
-    @Expose
-    val image: String,
+        @SerializedName("urlToImage")
+        @Expose
+        val image: String,
 
-    @SerializedName("publishedAt")
-    @Expose
-    val date: String,
+        @SerializedName("publishedAt")
+        @Expose
+        val date: String,
 
-    @SerializedName("url")
-    @Expose
-    val url: String,
+        @SerializedName("url")
+        @Expose
+        val url: String,
 
-    @SerializedName("source")
-    @Expose
-    val source: Source?
+        @SerializedName("source")
+        @Expose
+        val source: Source?
 ) : Parcelable {
     constructor() : this("", "", "", "", null)
 }
 
 @Parcelize
 data class Source(
-    @SerializedName("name")
-    @Expose
-    val name: String
+        @SerializedName("name")
+        @Expose
+        val name: String
 ) : Parcelable {
     constructor() : this("")
 }

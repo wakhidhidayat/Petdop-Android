@@ -1,5 +1,7 @@
 package com.wahidhidayat.petdop.ui.detailadoption
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -33,14 +35,24 @@ class AdoptionSentActivity : AppCompatActivity() {
         text_address.text = adoption.post.address
 
         mUserRef.document(adoption.post.author.toString()).get()
-            .addOnSuccessListener {
-                text_phone.text = it.getString("phone")
-            }
+                .addOnSuccessListener {
+                    text_phone.text = it.getString("phone")
+                }
 
         btn_cancel.setOnClickListener {
             mAdoptionRef.document(adoption.id).update("status", "Dibatalkan")
             Toast.makeText(this, "Berhasil membatalkan pengajuan adopsi!", Toast.LENGTH_SHORT)
-                .show()
+                    .show()
+        }
+
+
+        image_message.setOnClickListener {
+            startActivity(
+                    Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("http://wa.me/${adoption.user.phone}")
+                    )
+            )
         }
     }
 
