@@ -48,4 +48,6 @@
     <string name="photos">Foto Hewan</string>
     <string name="not_available">Tidak Tersedia</string>
     <string name="detail_news">Detail Artikel</string>
+    <string name="edit">Ubah Post</string>
+    <string name="delete">Hapus Post</string>
 </resources>

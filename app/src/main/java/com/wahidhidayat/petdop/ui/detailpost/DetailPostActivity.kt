@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -16,6 +17,8 @@ import com.synnapps.carouselview.ImageListener
 import com.wahidhidayat.petdop.R
 import com.wahidhidayat.petdop.data.Post
 import com.wahidhidayat.petdop.ui.adoption.AdoptionActivity
+import com.wahidhidayat.petdop.ui.editpost.EditPostActivity
+import com.wahidhidayat.petdop.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_detail_post.*
 
 class DetailPostActivity : AppCompatActivity() {
@@ -26,6 +29,7 @@ class DetailPostActivity : AppCompatActivity() {
 
     private val mUser = FirebaseAuth.getInstance().currentUser
     private val mUserReference = FirebaseFirestore.getInstance().collection("users")
+    private val mPostReference = FirebaseFirestore.getInstance().collection("posts")
     private val mUserEmail = mUser!!.email
     private var inBookmark = false
 
@@ -45,6 +49,14 @@ class DetailPostActivity : AppCompatActivity() {
         supportActionBar?.title = post.name
 
         insertData()
+
+        if(mUserEmail.toString() == post.author) {
+            btn_message.visibility = View.GONE
+            btn_adoption.visibility = View.GONE
+
+            btn_hapus.visibility = View.VISIBLE
+            btn_ubah.visibility = View.VISIBLE
+        }
 
         image_carousel.setImageClickListener { position ->
             val intent = Intent(this@DetailPostActivity, DetailPhotoActivity::class.java)
@@ -86,6 +98,24 @@ class DetailPostActivity : AppCompatActivity() {
 
         btn_message.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://wa.me/${post.phone}")))
+        }
+
+        btn_ubah.setOnClickListener {
+            val intent = Intent(this, EditPostActivity::class.java)
+            intent.putExtra(EditPostActivity.EXTRA_POST, post)
+            startActivity(intent)
+        }
+
+        btn_hapus.setOnClickListener {
+            mPostReference.document(post.id).delete()
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Berhasil menghapus post", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error $it", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 

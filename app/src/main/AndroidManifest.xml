@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ui.detailnews.DetailNewsActivity"></activity>
+        <activity android:name=".ui.editpost.EditPostActivity"></activity>
+        <activity android:name=".ui.detailnews.DetailNewsActivity" />
         <activity android:name=".ui.detailadoption.AdoptionSentActivity" />
         <activity android:name=".ui.detailadoption.AdoptionReceivedActivity" />
         <activity android:name=".ui.notification.NotificationActivity" />
