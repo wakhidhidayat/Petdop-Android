@@ -50,4 +50,5 @@
     <string name="detail_news">Detail Artikel</string>
     <string name="edit">Ubah Post</string>
     <string name="delete">Hapus Post</string>
+    <string name="newest">Terbaru</string>
 </resources>
